@@ -1,0 +1,15 @@
+<nav class="mt-4">
+  <ul class="space-y-2">
+    @for (item of menuItems; track item.path) {
+      <li>
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="bg-pink-500 text-white"
+          class="flex items-center gap-3 px-4 py-3 text-pink-800 hover:bg-pink-500 hover:text-white transition-colors rounded-lg mx-2"
+        >
+          <span>{{ item.label }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+</nav>

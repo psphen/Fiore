@@ -1,0 +1,60 @@
+<div class="p-6">
+  <form [formGroup]="categoryForm" (ngSubmit)="save()" class="border border-pink-500 p-3 rounded-xl space-y-4">
+    <div class="grid grid-cols-3 gap-4">
+      <div>
+        <label for="nameField" class="block">Nombre</label>
+        <input
+          type="text"
+          formControlName="name"
+          [class.bg-red-200]="nameField!.touched && nameField!.invalid"
+          [class.bg-green-200]="nameField!.touched && nameField!.valid"
+        >
+        <div class="message" [class.active]="nameField?.touched && nameField?.invalid">
+          @if (nameField?.touched && nameField?.hasError('required')) {
+            <strong class="text-red-500">El nombre es obligatorio</strong>
+          } @else if (nameField?.touched && nameField?.hasError('minlength')) {
+            <strong class="text-red-500">El nombre debe tener al menos 3 caracteres</strong>
+          } @else if (nameField?.touched && nameField?.hasError('not_available')){
+            <strong class="text-red-500">El nombre ya existe mi broqui</strong>
+          }
+        </div>
+      </div>
+
+      <div>
+        <label for="slugField" class="block">Slug</label>
+        <input
+          type="text"
+          formControlName="slug"
+          value="name"
+          [class.error]="slugField!.touched && slugField!.invalid"
+          [class.bg-green-200]="slugField!.touched && slugField!.valid"
+        >
+        <div class="message" [class.active]="slugField?.touched && slugField?.invalid">
+          @if (slugField?.touched && slugField?.hasError('required')) {
+            <strong class="text-red-500">El slug es obligatorio</strong>
+          }
+        </div>
+      </div>
+
+      <div>
+        <label for="imageField" class="block">Imagen</label>
+        <input
+          type="text"
+          formControlName="image"
+          placeholder="https://ejemplo.com/imagen.jpg"
+        >
+        <div class="message" [class.active]="imageField?.touched && imageField?.invalid">
+          @if (imageField?.touched && imageField?.hasError('required')) {
+            <strong class="text-red-500">La imagen es obligatoria</strong>
+          }
+        </div>
+      </div>
+    </div>
+
+    @if(isNew()){
+      <button class="bg-pink-400 px-4 py-2 rounded-lg hover:bg-pink-600 transition-all" type="submit">Guardar</button>
+    } @else {
+      <button class="bg-pink-400 px-4 py-2 rounded-lg hover:bg-pink-600 transition-all" type="submit">Editar</button>
+    }
+  </form>
+</div>

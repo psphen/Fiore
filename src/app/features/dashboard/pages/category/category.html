@@ -1,0 +1,25 @@
+<a [routerLink]="'/category/create'" class="px-5 py-2 rounded-lg bg-blue-400 hover:bg-blue-600 transition-all">Create Category</a>
+<table class="border-collapse border border-gray-400 w-full mt-4">
+  <thead>
+    <tr>
+      <th class="border border-gray-300">Nombre</th>
+      <th class="border border-gray-300">Slug</th>
+      <th class="border border-gray-300">Imagen</th>
+      <th class="border border-gray-300">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (category of categories(); track category.id) {
+      <tr>
+        <td class="border border-gray-300 px-4 py-2">{{ category.name }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ category.slug }}</td>
+        <td class="border border-gray-300 px-4 py-2 flex justify-center">
+          <img class="w-35 h-30 rounded-lg object-cover" src="{{category.image}}" alt="{{category.name}}">
+        </td>
+        <td class="border border-gray-300 px-4 py-2">
+          <a [routerLink]="['/category/edit', category.id]" class="px-5 py-2 rounded-lg bg-pink-400 hover:bg-pink-600 transition-all">Editar</a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
