@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { CategoryModel } from '../../../../models/category.model';
-import { CategoryService } from '../../../../serivces/category.service';
+import { CategoryService } from '../../../../services/category/category.service';
 
 @Component({
   selector: 'app-category',

@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { CategoryService } from '../serivces/category.service';
+import { CategoryService } from '../services/category/category.service';
 import { map } from 'rxjs';
 
 export class MyValidators {
