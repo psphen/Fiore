@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal, EventEmitter, Input, Output, input, output } from '@angular/core';
 import { ReactiveFormsModule, FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { CategoryService } from '../../../../../../serivces/category.service';
+import { CategoryService } from '../../../../../../services/category/category.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MyValidators } from '../../../../../../utils/validators';
 import { CategoryModel } from '../../../../../../models/category.model';

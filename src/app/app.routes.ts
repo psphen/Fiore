@@ -27,6 +27,18 @@ export const routes: Routes = [
         loadComponent: () => import('./features/dashboard/pages/category/containers/category-container/category-container').then(m => m.CategoryContainer)
       },
       {
+        path: 'product',
+        loadComponent: () => import('./features/dashboard/pages/product/product').then(m => m.Product)
+      },
+      {
+        path: 'product/create',
+        loadComponent: () => import('./features/dashboard/pages/product/container/product-container/product-container').then(m => m.ProductContainer)
+      },
+      {
+        path: 'product/edit/:id',
+        loadComponent: () => import('./features/dashboard/pages/product/container/product-container/product-container').then(m => m.ProductContainer)
+      },
+      {
         path: 'forms',
         loadComponent: () => import('./features/dashboard/pages/forms-reactive/forms-reactive').then(m => m.FormsReactive)
       }

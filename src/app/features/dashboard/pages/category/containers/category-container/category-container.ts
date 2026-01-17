@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, Input, Output, EventEmitter, signal } from '@angular/core';
-import { CategoryService } from '../../../../../../serivces/category.service';
+import { CategoryService } from '../../../../../../services/category/category.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CategoryForm } from "../../component/category-form/category-form";
 import { CategoryModel } from '../../../../../../models/category.model';

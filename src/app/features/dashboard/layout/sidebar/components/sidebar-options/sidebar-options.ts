@@ -11,6 +11,7 @@ export class SidebarOptions {
   menuItems = [
     { path: '/home', label: 'Home' },
     { path: '/category', label: 'Categorías' },
-    { path: '/forms', label: 'Formularios' }
+    { path: '/product', label: 'Productos' },
+    { path: '/forms', label: 'Formularios' },
   ];
 }

@@ -17,6 +17,7 @@ export class Navbar {
     if (url.includes('/category')) return 'Categorías';
     if (url.includes('/category/create')) return 'Crear Categoría';
     if (url.includes('/forms')) return 'Formularios';
+    if (url.includes('/forms')) return 'Productos';
 
     return 'Dashboard';
   }
