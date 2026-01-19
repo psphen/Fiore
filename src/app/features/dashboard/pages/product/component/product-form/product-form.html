@@ -1,1 +1,89 @@
-<p>product-form works!</p>
+<div class="p-6">
+  <form [formGroup]="productForm" (ngSubmit)="save()" class="border border-pink-500 p-3 rounded-xl space-y-4">
+    <div class="grid grid-cols-3 gap-4">
+      <div>
+        <label for="titleField" class="block">Nombre</label>
+        <input
+          type="text"
+          formControlName="title"
+          [class.bg-red-200]="titleField!.touched && titleField!.invalid"
+          [class.bg-green-200]="titleField!.touched && titleField!.valid"
+        >
+        <div class="message" [class.active]="titleField?.touched && titleField?.invalid">
+          @if (titleField?.touched && titleField?.hasError('required')) {
+            <strong class="text-red-500">El nombre es obligatorio</strong>
+          } @else if (titleField?.touched && titleField?.hasError('minlength')) {
+            <strong class="text-red-500">El nombre debe tener al menos 3 caracteres</strong>
+          }
+        </div>
+      </div>
+
+      <div>
+        <label for="slugField" class="block">Slug</label>
+        <input
+          type="text"
+          formControlName="slug"
+          value="name"
+          [class.error]="slugField!.touched && slugField!.invalid"
+          [class.bg-green-200]="slugField!.touched && slugField!.valid"
+        >
+        <div class="message" [class.active]="slugField?.touched && slugField?.invalid">
+          @if (slugField?.touched && slugField?.hasError('required')) {
+            <strong class="text-red-500">El slug es obligatorio</strong>
+          }
+        </div>
+      </div>
+
+      <div>
+        <label for="priceField" class="block">Precio</label>
+        <input
+          type="number"
+          formControlName="price"
+          placeholder="1000"
+        >
+        <div class="message" [class.active]="priceField?.touched && priceField?.invalid">
+          @if (priceField?.touched && priceField?.hasError('required')) {
+            <strong class="text-red-500">El precio es obligatorio</strong>
+          }
+        </div>
+      </div>
+
+      <div>
+        <label for="imageField" class="block">Imagen</label>
+        <input
+          type="text"
+          formControlName="image"
+          placeholder="https://ejemplo.com/imagen.jpg"
+        >
+        <div class="message" [class.active]="imageField?.touched && imageField?.invalid">
+          @if (imageField?.touched && imageField?.hasError('required')) {
+            <strong class="text-red-500">La imagen es obligatoria</strong>
+          }
+        </div>
+      </div>
+
+      <div>
+        <label for="categoryFiel" class="block">Categorias</label>
+        <select
+          id="category"
+          formControlName="category"
+        >
+          <option value="">Selecciona una categorioa</option>
+          @for (category of categories(); track category.id) {
+            <option [value]="category.id">{{ category.name }}</option>
+            {{ category }}
+          }
+        </select>
+        <div class="message">
+
+        </div>
+      </div>
+    </div>
+
+    @if(isNew()){
+      <button class="bg-pink-400 px-4 py-2 rounded-lg hover:bg-pink-600 transition-all" type="submit">Guardar</button>
+    } @else {
+      <button class="bg-pink-400 px-4 py-2 rounded-lg hover:bg-pink-600 transition-all" type="submit">Editar</button>
+    }
+  </form>
+</div>

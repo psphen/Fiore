@@ -1,1 +1,6 @@
-<p>product-container works!</p>
+<app-product-form
+  (create)="createProduct($event)"
+  (update)="updateProduct($event)"
+  [product]="productModel()"
+>
+</app-product-form>
