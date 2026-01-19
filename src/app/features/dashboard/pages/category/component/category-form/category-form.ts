@@ -1,8 +1,5 @@
-import { Component, inject, OnInit, signal, EventEmitter, Input, Output, input, output } from '@angular/core';
+import { Component, inject, OnInit, signal, Input, output, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule, FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { CategoryService } from '../../../../../../services/category/category.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { MyValidators } from '../../../../../../utils/validators';
 import { CategoryModel } from '../../../../../../models/category.model';
 
 @Component({
@@ -26,8 +23,8 @@ export class CategoryForm implements OnInit {
     }
   }
 
-  create = output<CategoryModel>();
-  update = output<CategoryModel>();
+  @Output() create = new EventEmitter<CategoryModel>();
+  @Output() update = new EventEmitter<CategoryModel>();
 
   constructor(
     private fb: FormBuilder,
