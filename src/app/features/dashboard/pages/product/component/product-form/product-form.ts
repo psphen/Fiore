@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output, output, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductModel } from '../../../../../../models/product.model';
 import { CategoryModel } from '../../../../../../models/category.model';
 import { CategoryService } from '../../../../../../services/category/category.service';
@@ -63,14 +63,32 @@ export class ProductForm implements OnInit {
       image: ['', Validators.required],
       category: ['', Validators.required],
       description: ['', [Validators.required, Validators.maxLength(100)]],
+      address: this.fb.array([])
     });
+  }
+
+  protected addAddressField(){
+    this.addressField.push(this.createAddressField());
+  }
+
+  protected deleteAddressField(index: number){
+    this.addressField.removeAt(index);
+  }
+
+  private createAddressField(){
+    return this.fb.group({
+      zip: ['', Validators.required],
+      text: ['', Validators.required]
+    })
   }
 
   get titleField(){ return this.productForm.get('title'); }
   get slugField(){ return this.productForm.get('slug'); }
   get priceField(){ return this.productForm.get('price'); }
   get imageField(){ return this.productForm.get('image'); }
+  get categoryField(){ return this.productForm.get('category'); }
   get descriptionField(){ return this.productForm.get('description'); }
+  get addressField(){ return this.productForm.get('address') as FormArray; }
 
   protected save(){
     if(this.productForm.valid){

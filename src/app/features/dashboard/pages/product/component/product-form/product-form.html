@@ -74,8 +74,35 @@
             {{ category }}
           }
         </select>
-        <div class="message">
+        <div class="message" [class.active]="categoryField?.touched && categoryField?.invalid">
+          @if (categoryField?.touched && categoryField?.hasError('required')) {
+            <strong class="text-red-500">La categoria es obligatoria</strong>
+          }
+        </div>
+      </div>
 
+      <div class="col-span-3">
+        <button class="bg-blue-300 rounded-lg px-3 py-2 cursor-pointer hover:bg-blue-500 transition-all" type="button" (click)="addAddressField()">
+          Nueva dirección
+        </button>
+        <div formArrayName="address">
+          @for (address of addressField.controls; track $index) {
+            <div [formGroupName]="$index" class="grid grid-cols-5 gap-4 my-4">
+              <div class="col-span-1">
+                <label for="zip" class="block">Codigo Zip</label>
+                <input type="text" formControlName="zip" placeholder="500006">
+              </div>
+
+              <div class="col-span-3">
+                <label for="address" class="block">Direccion</label>
+                <input type="text" formControlName="text" placeholder="Crra 15A">
+              </div>
+
+              <div class="col-span-1 flex items-end">
+                <button class="bg-red-300 rounded-lg px-3 py-2 cursor-pointer hover:bg-red-500 transition-all" type="button" (click)="deleteAddressField($index)">Eliminar</button>
+              </div>
+            </div>
+          }
         </div>
       </div>
     </div>
