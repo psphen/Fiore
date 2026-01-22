@@ -1,0 +1,11 @@
+<p>
+  <input class="px-3 py-2 border border-gray-400 rounded-lg focus:border-blue-400" type="search" [formControl]="searchForm">
+</p>
+<p>
+  {{ searchForm.value }}
+</p>
+<div class="grid grid-cols-4 gap-4">
+  @for (gif of gifAny(); track gif) {
+    <img [src]="gif.url" class="w-full object-cover">
+  }
+</div>

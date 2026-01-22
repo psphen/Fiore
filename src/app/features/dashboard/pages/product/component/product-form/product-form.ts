@@ -79,7 +79,7 @@ export class ProductForm implements OnInit {
     return this.fb.group({
       zip: ['', Validators.required],
       text: ['', Validators.required]
-    })
+    });
   }
 
   get titleField(){ return this.productForm.get('title'); }
@@ -88,7 +88,7 @@ export class ProductForm implements OnInit {
   get imageField(){ return this.productForm.get('image'); }
   get categoryField(){ return this.productForm.get('category'); }
   get descriptionField(){ return this.productForm.get('description'); }
-  get addressField(){ return this.productForm.get('address') as FormArray; }
+  get addressField(){ return this.productForm.get('address') as FormArray }
 
   protected save(){
     if(this.productForm.valid){
