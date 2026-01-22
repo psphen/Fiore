@@ -5,6 +5,7 @@
       <th class="border border-gray-300">Nombre</th>
       <th class="border border-gray-300">Precio</th>
       <th class="border border-gray-300">Descripción</th>
+      <th class="border border-gray-300">Imagen</th>
       <th class="border border-gray-300">Categoria</th>
       <th class="border border-gray-300">Acciones</th>
     </tr>
@@ -15,7 +16,14 @@
         <td class="border border-gray-300 px-4 py-2">{{ product.title }}</td>
         <td class="border border-gray-300 px-4 py-2">{{ product.price }}</td>
         <td class="border border-gray-300 px-4 py-2">{{ product.description }}</td>
-        <td class="border border-gray-300 px-4 py-2"></td>
+        <td class="border border-gray-300 px-4 py-2 w-[10%]">
+          @if (product.images.length > 0) {
+            <img [src]="product.images[0]" [alt]="product.title" class="w-20 h-20 object-cover rounded-lg">
+          }
+        </td>
+        <td class="border border-gray-300 px-4 py-2">
+          {{ product.category.name }}
+        </td>
         <td class="border border-gray-300 px-4 py-2">
           <a [routerLink]="['/product/edit', product.id]" class="px-5 py-2 rounded-lg bg-pink-400 hover:bg-pink-600 transition-all">Editar</a>
         </td>

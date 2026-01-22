@@ -26,6 +26,7 @@ export class Product implements OnInit {
   private loadProducts(){
     this.productService.getAllProducts().subscribe({
       next: (products) => {
+        console.log(products);
         this.products.set(products);
       },
       error: (error) => {
