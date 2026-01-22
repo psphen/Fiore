@@ -31,9 +31,6 @@ export class CategoryContainer implements OnInit {
       next: (resp) => {
         this.router.navigate(['category']);
       },
-      error: (err) => {
-        console.error('Error:', err);
-      }
     });
   }
 
@@ -44,9 +41,6 @@ export class CategoryContainer implements OnInit {
         next: (resp) => {
           this.router.navigate(['category']);
         },
-        error: (err) => {
-          console.error('Error:', err);
-        }
       });
     }
   }
@@ -56,9 +50,6 @@ export class CategoryContainer implements OnInit {
       next: (resp) => {
         this.categoryModel.set(resp)
       },
-      error: (err) => {
-        console.error('Error:', err);
-      }
     });
   }
 }
