@@ -1,0 +1,11 @@
+:host {
+  &.active {
+    div {
+      transform: translateX(0%);
+    }
+  }
+
+  div {
+    transform: translateX(100%);
+  }
+}

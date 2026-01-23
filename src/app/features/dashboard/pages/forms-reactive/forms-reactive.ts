@@ -68,7 +68,6 @@ export class FormsReactive implements OnInit {
 
   ngOnInit(): void {
     this.nameField!.valueChanges.subscribe((value) => {
-      console.log(value);
     })
   }
 
