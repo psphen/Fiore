@@ -1,0 +1,37 @@
+
+<div class="fixed top-0 left-[70%] bottom-0 right-0 bg-white flex flex-col justify-start transition-all shadow-lg p-6 overflow-y-auto">
+  <button class="px-5 py-2 rounded-lg bg-gray-400 hover:bg-gray-600 transition-all self-end mb-4" type="button" (click)="close()">Cerrar</button>
+
+  <h1 class="text-center text-2xl font-bold mb-6">Detalles del Producto</h1>
+
+  @if (product; as prod) {
+    <div class="space-y-4">
+      <div>
+        <h2 class="font-bold text-xl">{{ prod.title }}</h2>
+      </div>
+
+      @if (prod.images.length > 0) {
+        <div>
+          <img [src]="prod.images[0]" [alt]="prod.title" class="w-full h-64 object-cover rounded-lg">
+        </div>
+      }
+
+      <div>
+        <p class="font-semibold">Precio:</p>
+        <p class="text-lg">${{ prod.price }}</p>
+      </div>
+
+      <div>
+        <p class="font-semibold">Descripción:</p>
+        <p>{{ prod.description }}</p>
+      </div>
+
+      <div>
+        <p class="font-semibold">Categoría:</p>
+        <p>{{ prod.category.name }}</p>
+      </div>
+    </div>
+  } @else {
+    <p class="text-center text-gray-500">Selecciona un producto para ver sus detalles</p>
+  }
+</div>

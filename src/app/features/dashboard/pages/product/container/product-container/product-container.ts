@@ -11,55 +11,45 @@ import { ProductForm } from "../../component/product-form/product-form";
   styleUrl: './product-container.css',
 })
 export class ProductContainer implements OnInit {
-  protected productModel = signal<ProductModel | null>(null);
+  protected readonly productModel = signal<ProductModel | null>(null);
 
   private productService = inject(ProductService);
   private activeRoute = inject(ActivatedRoute);
-  private router = inject(Router);
+  private route = inject(Router);
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params: Params) => {
       const id = params['id'];
-      if(params['id']){
-        this.getProduct(params['id']);
+      if(id){
+        this.getProduct(id);
       }
     });
   }
 
-  createProduct(data: Partial<ProductModel>){
+  protected createProduct(data: Partial<ProductModel>){
     this.productService.createProduct(data).subscribe({
       next: () => {
-        this.router.navigate(['product']);
-      },
-      error: (error) => {
-        alert(error);
+        this.route.navigate(['product'])
       }
     });
   }
 
-  updateProduct(data: Partial<ProductModel>){
+  protected updateProduct(data: Partial<ProductModel>){
     const product = this.productModel();
-    
-    // if(product && product.id){
-    //   this.productService.updateProduct(product.id, data).subscribe({
-    //     next: () => {
-    //       this.router.navigate(['product']);
-    //     },
-    //     error: (error) => {
-    //       alert(error);
-    //     }
-    //   });
-    // }
+    if(product && product.id){
+      this.productService.updateProduct(product?.id, data).subscribe({
+        next: () => {
+          this.route.navigate(['product']);
+        }
+      })
+    }
   }
 
-  private getProduct(id: number){
+  protected getProduct(id: number){
     this.productService.getProduct(id).subscribe({
       next: (resp) => {
         this.productModel.set(resp);
-      },
-      error: (error) => {
-        alert(error);
       }
-    })
+    });
   }
 }

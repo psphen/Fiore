@@ -1,32 +1,29 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { ProductService } from '../../../../services/product/product.service';
 import { ProductModel } from '../../../../models/product.model';
-import { CategoryService } from '../../../../services/category/category.service';
-import { CategoryModel } from '../../../../models/category.model';
+import { ProductPersonal } from "./component/product-personal/product-personal";
 
 @Component({
   selector: 'app-product',
-  imports: [RouterLink],
+  imports: [RouterLink, ProductPersonal],
   templateUrl: './product.html',
   styleUrl: './product.css',
 })
 export class Product implements OnInit {
   protected readonly products = signal<ProductModel[]>([]);
-  protected readonly categories = signal<CategoryModel[]>([]);
+  protected readonly showDetail = signal<boolean>(false);
+  protected readonly selectedProduct = signal<ProductModel | null>(null);
 
   private productService = inject(ProductService);
-  private categoryService = inject(CategoryService);
 
   ngOnInit(): void {
     this.loadProducts();
-    this.loadCategories();
   }
 
   private loadProducts(){
     this.productService.getAllProducts().subscribe({
       next: (products) => {
-        console.log(products);
         this.products.set(products);
       },
       error: (error) => {
@@ -35,14 +32,13 @@ export class Product implements OnInit {
     })
   }
 
-  private loadCategories(){
-    this.categoryService.getAllCategory().subscribe({
-      next: (resp) => {
-        this.categories.set(resp);
-      },
-      error: (error) => {
-        alert(error);
-      }
-    })
+  onToggleDetail(product: ProductModel){
+    this.showDetail.set(true);
+    this.selectedProduct.set(product);
+  }
+
+  closeDetail(){
+    this.showDetail.set(false);
+    this.selectedProduct.set(null);
   }
 }

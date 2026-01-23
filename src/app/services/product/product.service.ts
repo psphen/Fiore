@@ -22,6 +22,6 @@ export class ProductService {
   }
 
   updateProduct(id: number, data: Partial<ProductModel>){
-    return this.http.put<ProductModel>(`${environment.apiUrl}/api/categories/${id}`, data);
+    return this.http.put<ProductModel>(`${environment.apiUrl}/api/v1/products/${id}`, data);
   }
 }

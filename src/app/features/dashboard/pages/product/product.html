@@ -26,8 +26,15 @@
         </td>
         <td class="border border-gray-300 px-4 py-2">
           <a [routerLink]="['/product/edit', product.id]" class="px-5 py-2 rounded-lg bg-pink-400 hover:bg-pink-600 transition-all">Editar</a>
+          <button class="px-5 py-2 rounded-lg bg-blue-400 hover:bg-blue-600 transition-all" type="button" (click)="onToggleDetail(product)">Detalles</button>
         </td>
       </tr>
     }
   </tbody>
 </table>
+<app-product-personal
+  [product]="selectedProduct()"
+  (closeDetail)="closeDetail()"
+  [class.active]="showDetail()"
+>
+</app-product-personal>
