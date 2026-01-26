@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output, output, signal } from '@angular/core';
 import { Form, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ProductModel } from '../../../../../../models/product.model';
+import { ProductModel, ProductSaveUpda } from '../../../../../../models/product.model';
 import { CategoryModel } from '../../../../../../models/category.model';
 import { CategoryService } from '../../../../../../services/category/category.service';
 
@@ -21,13 +21,16 @@ export class ProductForm implements OnInit {
     if(data){
       this.isNew.set(false);
       this.productForm.patchValue({
-        ...data,
+        title: data.title,
+        price: data.price,
+        description: data.description,
+        image: data.images[0] || '',
         category: data.category.id
       });
     }
   }
-  @Output() create = new EventEmitter<ProductModel>();
-  @Output() update = new EventEmitter<ProductModel>();
+  @Output() create = new EventEmitter<ProductSaveUpda>();
+  @Output() update = new EventEmitter<ProductSaveUpda>();
 
   constructor(
     private fb: FormBuilder
@@ -50,8 +53,8 @@ export class ProductForm implements OnInit {
   protected initialForm(){
     this.productForm = this.fb.group({
       title: ['', Validators.required],
-      slug: ['', Validators.required],
       price: ['', Validators.required],
+      description: ['', Validators.required],
       image: ['', Validators.required],
       category: ['', Validators.required],
       address: this.fb.array([])
@@ -59,8 +62,8 @@ export class ProductForm implements OnInit {
   }
 
   get titleField(){ return this.productForm.get('title'); }
-  get slugField(){ return this.productForm.get('slug'); }
   get priceField(){ return this.productForm.get('price'); }
+  get descriptionField(){ return this.productForm.get('description'); }
   get imageField(){ return this.productForm.get('image'); }
   get categoryField(){ return this.productForm.get('category'); }
   get addressField(){ return this.productForm.get('address') as FormArray; }
@@ -82,10 +85,19 @@ export class ProductForm implements OnInit {
 
   protected save(){
     if(this.productForm.valid){
+      const formData = this.productForm.value;
+      const payload: ProductSaveUpda = {
+        title: formData.title,
+        price: Number(formData.price),
+        description: formData.description,
+        categoryId: Number(formData.category),
+        images: [formData.image]
+      };
+
       if(this.isNew()){
-        this.create.emit(this.productForm.value);
+        this.create.emit(payload);
       }else{
-        this.update.emit(this.productForm.value);
+        this.update.emit(payload);
       }
     } else {
       this.productForm.markAllAsTouched();

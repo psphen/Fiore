@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ProductModel } from '../../../../../../models/product.model';
+import { ProductModel, ProductSaveUpda } from '../../../../../../models/product.model';
 import { ProductService } from '../../../../../../services/product/product.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ProductForm } from "../../component/product-form/product-form";
@@ -26,20 +26,28 @@ export class ProductContainer implements OnInit {
     });
   }
 
-  protected createProduct(data: Partial<ProductModel>){
+  protected createProduct(data: ProductSaveUpda){
     this.productService.createProduct(data).subscribe({
       next: () => {
         this.route.navigate(['product'])
+      },
+      error: (error) => {
+        console.error('Error al crear producto:', error);
+        alert('Error al crear el producto');
       }
     });
   }
 
-  protected updateProduct(data: Partial<ProductModel>){
+  protected updateProduct(data: ProductSaveUpda){
     const product = this.productModel();
     if(product && product.id){
-      this.productService.updateProduct(product?.id, data).subscribe({
+      this.productService.updateProduct(product.id, data).subscribe({
         next: () => {
           this.route.navigate(['product']);
+        },
+        error: (error) => {
+          console.error('Error al actualizar producto:', error);
+          alert('Error al actualizar el producto');
         }
       })
     }
