@@ -1,6 +1,6 @@
 import { CategoryModel } from "./category.model";
 
-export interface ProductModel {
+export interface Product {
   id: number;
   title: string;
   slug: string;
@@ -8,4 +8,11 @@ export interface ProductModel {
   description: string;
   category: CategoryModel;
   images: string[];
+  taxes?: number
 }
+
+export type CreateProductDTO = Omit<Product, 'id' | 'slug' | 'category'> & {
+  categoryId: number;
+}
+
+export type UpdateProductDTO = Pick<Product, 'title' | 'price'>;

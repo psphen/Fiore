@@ -7,11 +7,23 @@ input{
     border-color: red;
   }
 }
+textarea{
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 10px;
+  width: 100%;
+  &.error{
+    border-color: red;
+  }
+}
 select{
   border: 1px solid #ccc;
   padding: 8px;
   border-radius: 10px;
   width: 100%;
+  &.error{
+    border-color: red;
+  }
 }
 @keyframes fadeIn {
   from {
@@ -43,4 +55,10 @@ select{
   &.active{
     animation: fadeIn 0.5s forwards;
   }
+}
+
+.required::after{
+  content: '*';
+  position: absolute;
+  color: red;
 }

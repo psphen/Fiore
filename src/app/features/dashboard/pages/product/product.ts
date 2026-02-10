@@ -16,15 +16,18 @@ export class Product implements OnInit {
   protected readonly selectedProduct = signal<ProductModel | null>(null);
 
   private productService = inject(ProductService);
+  protected limit = 10;
+  protected offset = 0;
 
   ngOnInit(): void {
-    this.loadProducts();
+    this.loadProducts(10, 0);
   }
 
-  private loadProducts(){
-    this.productService.getAllProducts().subscribe({
+  private loadProducts(limit?: number, offset?: number){
+    this.productService.getAll(limit, offset).subscribe({
       next: (products) => {
         this.products.set(products);
+        this.offset += this.limit;
       },
       error: (error) => {
         alert(error);
@@ -40,5 +43,16 @@ export class Product implements OnInit {
   closeDetail(){
     this.showDetail.set(false);
     this.selectedProduct.set(null);
+  }
+
+  protected deleteProduct(id: number){
+    const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este producto?');
+    if (confirmDelete) {
+      this.productService.delete(id).subscribe({
+        next: () => {
+          this.loadProducts(this.limit, this.offset);
+        },
+      });
+    }
   }
 }
