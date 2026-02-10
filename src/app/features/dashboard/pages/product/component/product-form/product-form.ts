@@ -1,8 +1,8 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output, output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { Form, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ProductModel, ProductSaveUpda } from '../../../../../../models/product.model';
 import { CategoryModel } from '../../../../../../models/category.model';
 import { CategoryService } from '../../../../../../services/category/category.service';
+import { CreateProductDTO, Product, UpdateProductDTO } from '../../../../../../models/product.model';
 
 @Component({
   selector: 'app-product-form',
@@ -17,25 +17,21 @@ export class ProductForm implements OnInit {
 
   private categoryService = inject(CategoryService);
 
-  @Input() set product(data: ProductModel | null){
+  @Input() set product(data: Product | null){
     if(data){
       this.isNew.set(false);
       this.productForm.patchValue({
-        title: data.title,
-        price: data.price,
-        description: data.description,
-        image: data.images[0] || '',
-        category: data.category.id
+        ...data
       });
     }
   }
-  @Output() create = new EventEmitter<ProductSaveUpda>();
-  @Output() update = new EventEmitter<ProductSaveUpda>();
+  @Output() create = new EventEmitter<CreateProductDTO>();
+  @Output() update = new EventEmitter<UpdateProductDTO>();
 
   constructor(
     private fb: FormBuilder
   ){
-    this.initialForm()
+    this.initialForm();
   }
 
   ngOnInit(): void {
@@ -55,17 +51,16 @@ export class ProductForm implements OnInit {
       title: ['', Validators.required],
       price: ['', Validators.required],
       description: ['', Validators.required],
-      image: ['', Validators.required],
-      category: ['', Validators.required],
-      address: this.fb.array([])
-    });
+      categoryId: ['', Validators.required],
+      images: ['', Validators.required]
+    })
   }
 
   get titleField(){ return this.productForm.get('title'); }
   get priceField(){ return this.productForm.get('price'); }
   get descriptionField(){ return this.productForm.get('description'); }
-  get imageField(){ return this.productForm.get('image'); }
-  get categoryField(){ return this.productForm.get('category'); }
+  get categoryField(){ return this.productForm.get('categoryId'); }
+  get imageField(){ return this.productForm.get('images'); }
   get addressField(){ return this.productForm.get('address') as FormArray; }
 
   protected addAddressField(){
@@ -86,18 +81,15 @@ export class ProductForm implements OnInit {
   protected save(){
     if(this.productForm.valid){
       const formData = this.productForm.value;
-      const payload: ProductSaveUpda = {
+      const updaDate: UpdateProductDTO = {
         title: formData.title,
-        price: Number(formData.price),
-        description: formData.description,
-        categoryId: Number(formData.category),
-        images: [formData.image]
-      };
+        price: formData.price
+      }
 
       if(this.isNew()){
-        this.create.emit(payload);
+        this.create.emit(formData);
       }else{
-        this.update.emit(payload);
+        this.update.emit(updaDate);
       }
     } else {
       this.productForm.markAllAsTouched();

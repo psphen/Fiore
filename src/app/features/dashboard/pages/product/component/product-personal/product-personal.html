@@ -8,6 +8,7 @@
     <div class="space-y-4">
       <div>
         <h2 class="font-bold text-xl">{{ prod.title }}</h2>
+        <h2 class="font-bold text-xl">{{ prod?.texes | currency:'COP'}}</h2>
       </div>
 
       @if (prod.images.length > 0) {
@@ -18,7 +19,7 @@
 
       <div>
         <p class="font-semibold">Precio:</p>
-        <p class="text-lg">${{ prod.price }}</p>
+        <p class="text-lg">${{ prod.price | currency:'COP'}}</p>
       </div>
 
       <div>
