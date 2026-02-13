@@ -1,0 +1,47 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h2 mat-dialog-title>Productos de {{ data.categoryName }}</h2>
+    <button mat-icon-button (click)="close()" class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content class="modal-content">
+    @if (data.products.length === 0) {
+      <div class="no-products">
+        <mat-icon class="no-products-icon">inventory_2</mat-icon>
+        <p>No hay productos en esta categoría</p>
+      </div>
+    } @else {
+      <div class="products-grid">
+        @for (product of data.products; track product.id) {
+          <div class="product-card">
+            <div class="product-image-container">
+              @if (product.images && product.images.length > 0) {
+                <img [src]="product.images[0]" [alt]="product.title" class="product-image">
+              } @else {
+                <div class="product-no-image">
+                  <mat-icon>image</mat-icon>
+                </div>
+              }
+            </div>
+            <div class="product-info">
+              <h3 class="product-title">{{ product.title }}</h3>
+              <p class="product-description">{{ product.description }}</p>
+              <div class="product-footer">
+                <span class="product-price">${{ product.price | number:'1.2-2' }}</span>
+                @if (product.taxes) {
+                  <span class="product-taxes">+{{ product.taxes }}% tax</span>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="modal-actions">
+    <button mat-raised-button color="primary" (click)="close()">Cerrar</button>
+  </mat-dialog-actions>
+</div>

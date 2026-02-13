@@ -17,7 +17,10 @@
           <img class="w-35 h-30 rounded-lg object-cover" src="{{category.image}}" alt="{{category.name}}">
         </td>
         <td class="border border-gray-300 px-4 py-2">
-          <a [routerLink]="['/category/edit', category.id]" class="px-5 py-2 rounded-lg bg-pink-400 hover:bg-pink-600 transition-all">Editar</a>
+          <div class="flex gap-2 justify-center">
+            <a [routerLink]="['/category/edit', category.id]" class="px-5 py-2 rounded-lg bg-pink-400 hover:bg-pink-600 transition-all">Editar</a>
+            <button (click)="openProductsModal(category)" class="px-5 py-2 rounded-lg bg-green-400 hover:bg-green-600 transition-all">Productos</button>
+          </div>
         </td>
       </tr>
     }

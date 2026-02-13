@@ -2,7 +2,7 @@ import { Component, inject, OnInit, Input, Output, EventEmitter, signal } from '
 import { CategoryService } from '../../../../../../services/category/category.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CategoryForm } from "../../component/category-form/category-form";
-import { CategoryModel } from '../../../../../../models/category.model';
+import { Category, CategoryDTO } from '../../../../../../models/category.model';
 
 @Component({
   selector: 'app-category-container',
@@ -11,7 +11,7 @@ import { CategoryModel } from '../../../../../../models/category.model';
   styleUrl: './category-container.css',
 })
 export class CategoryContainer implements OnInit {
-  protected categoryModel = signal<CategoryModel | null>(null);
+  protected categoryModel = signal<Category | null>(null);
 
   private categoryService = inject(CategoryService);
   private route = inject(ActivatedRoute);
@@ -26,7 +26,7 @@ export class CategoryContainer implements OnInit {
     });
   }
 
-  createCategory(data: Partial<CategoryModel>){
+  createCategory(data: Partial<Category>){
     this.categoryService.createCategory(data).subscribe({
       next: (resp) => {
         this.router.navigate(['category']);
@@ -34,7 +34,7 @@ export class CategoryContainer implements OnInit {
     });
   }
 
-  updateCategory(data: Partial<CategoryModel>){
+  updateCategory(data: CategoryDTO){
     const category = this.categoryModel();
     if(category && category.id){
       this.categoryService.updateCategory(category.id, data).subscribe({

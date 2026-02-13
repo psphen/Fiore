@@ -1,7 +1,7 @@
 import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { ProductService } from '../../../../services/product/product.service';
-import { ProductModel } from '../../../../models/product.model';
+import { Product as ProductModel } from '../../../../models/product.model';
 import { ProductPersonal } from "./component/product-personal/product-personal";
 
 @Component({
@@ -24,7 +24,7 @@ export class Product implements OnInit {
   }
 
   private loadProducts(limit?: number, offset?: number){
-    this.productService.getAll(limit, offset).subscribe({
+    this.productService.get().subscribe({
       next: (products) => {
         this.products.set(products);
         this.offset += this.limit;

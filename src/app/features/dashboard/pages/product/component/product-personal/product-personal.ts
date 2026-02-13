@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ProductModel } from '../../../../../../models/product.model';
+import { Product } from '../../../../../../models/product.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './product-personal.scss',
 })
 export class ProductPersonal {
-  @Input() product: ProductModel | null = null;
+  @Input() product: Product | null = null;
   @Output() closeDetail = new EventEmitter<void>();
 
   protected close(){
