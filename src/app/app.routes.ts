@@ -3,16 +3,34 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
+    loadComponent: () => import('./features/dashboard/pages/home/home').then(m => m.Home)
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./features/dashboard/pages/login/login').then(m => m.Login)
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./features/dashboard/pages/register/register').then(m => m.Register)
+  },
+  {
+    path: 'my-cart',
+    loadComponent: () => import('./features/dashboard/pages/my-cart/my-cart').then(m => m.MyCart)
+  },
+  {
+    path: 'product/:id',
+    loadComponent: () => import('./features/dashboard/pages/product-detail/product-detail').then(m => m.ProductDetail)
+  },
+
+  // Dashboard administrativo
+  {
+    path: 'dashboard',
     loadComponent: () => import('./features/dashboard/layout/content/content').then(m => m.Content),
     children: [
       {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'category',
         pathMatch: 'full'
-      },
-      {
-        path: 'home',
-        loadComponent: () => import('./features/dashboard/pages/home/home').then(m => m.Home)
       },
       {
         path: 'category',
@@ -43,5 +61,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/dashboard/pages/forms-reactive/forms-reactive').then(m => m.FormsReactive)
       }
     ]
+  },
+  // Página 404 (sin layout)
+  {
+    path: '**',
+    loadComponent: () => import('./features/dashboard/pages/not-found/not-found').then(m => m.NotFound)
   }
 ];

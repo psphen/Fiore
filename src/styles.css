@@ -1,4 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import "tailwindcss";
 @import "swiper/swiper-bundle.css";
+
+:root {
+  --fiore-primary: #ec4899;
+  --fiore-primary-dark: #db2777;
+  --fiore-primary-light: #f472b6;
+  --fiore-primary-lighter: #f9a8d4;
+  --fiore-primary-lightest: #fce7f3;
+  --fiore-background: #fef3f7;
+  --fiore-text: #111827;
+  --fiore-text-secondary: #6b7280;
+  --fiore-border: #fce7f3;
+  --fiore-white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--fiore-text);
+  background: var(--fiore-white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--fiore-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--fiore-primary-lighter);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fiore-primary);
+}
+
+a, button {
+  transition: all 0.3s ease;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--fiore-primary);
+  outline-offset: 2px;
+}

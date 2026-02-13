@@ -1,4 +1,4 @@
-import { CategoryModel } from "./category.model";
+import { Category } from "./category.model";
 
 export interface Product {
   id: number;
@@ -6,7 +6,7 @@ export interface Product {
   slug: string;
   price: number;
   description: string;
-  category: CategoryModel;
+  category: Category;
   images: string[];
   taxes?: number
 }

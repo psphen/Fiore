@@ -1,7 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
-import { CategoryModel } from '../../../../models/category.model';
+import { Category as CategoryModel } from '../../../../models/category.model';
 import { CategoryService } from '../../../../services/category/category.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Product } from '../../../../models/product.model';
+import { ProductsModal } from '../../../../shared/components/products-modal/products-modal';
 
 @Component({
   selector: 'app-category',
@@ -11,6 +14,9 @@ import { CategoryService } from '../../../../services/category/category.service'
 })
 export class Category implements OnInit {
   protected readonly categories = signal<CategoryModel[]>([])
+  protected readonly products = signal<Product[]>([]);
+
+  readonly dialog = inject(MatDialog);
 
   private categoryService = inject(CategoryService);
 
@@ -24,5 +30,30 @@ export class Category implements OnInit {
         this.categories.set(categories);
       }
     })
+  }
+
+  protected openProductsModal(category: CategoryModel): void {
+    this.categoryService.getProductsByCategory(category.id).subscribe({
+      next: (resp) => {
+        this.dialog.open(ProductsModal, {
+          width: '900px',
+          maxWidth: '95vw',
+          data: {
+            products: resp,
+            categoryName: category.name
+          }
+        });
+      },
+      error: () => {
+        this.dialog.open(ProductsModal, {
+          width: '900px',
+          maxWidth: '95vw',
+          data: {
+            products: [],
+            categoryName: category.name
+          }
+        });
+      }
+    });
   }
 }

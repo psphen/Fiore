@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { Form, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CategoryModel } from '../../../../../../models/category.model';
+import { Category } from '../../../../../../models/category.model';
 import { CategoryService } from '../../../../../../services/category/category.service';
 import { CreateProductDTO, Product, UpdateProductDTO } from '../../../../../../models/product.model';
 
@@ -12,7 +12,7 @@ import { CreateProductDTO, Product, UpdateProductDTO } from '../../../../../../m
 })
 export class ProductForm implements OnInit {
   protected productForm!: FormGroup;
-  protected readonly categories = signal<CategoryModel[]>([]);
+  protected readonly categories = signal<Category[]>([]);
   protected readonly isNew = signal<boolean>(true);
 
   private categoryService = inject(CategoryService);

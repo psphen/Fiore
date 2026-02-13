@@ -2,28 +2,34 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
-import { CategoryModel } from '../../models/category.model';
+import { Category, CategoryDTO } from '../../models/category.model';
+import { Product } from '../../models/product.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
+  private apiUrl = `${environment.apiUrl}/api/v1/categories`;
 
   getAllCategory(){
-    return this.http.get<CategoryModel[]>(`${environment.apiUrl}/api/v1/categories`);
+    return this.http.get<Category[]>(this.apiUrl);
   }
 
   getCategory(id: string){
-    return this.http.get<CategoryModel>(`${environment.apiUrl}/api/v1/categories/${id}`)
+    return this.http.get<Category>(`${this.apiUrl}/${id}`)
   }
 
-  createCategory(data: Partial<CategoryModel> | FormData){
-    return this.http.post<CategoryModel>(`${environment.apiUrl}/api/v1/categories`, data);
+  getProductsByCategory(id: number){
+    return this.http.get<Product[]>(`${this.apiUrl}/${id}/products`);
   }
 
-  updateCategory(id: string, data: Partial<CategoryModel>){
-    return this.http.put<CategoryModel>(`${environment.apiUrl}/api/v1/categories/${id}`, data);
+  createCategory(data: Partial<CategoryDTO> | FormData){
+    return this.http.post<Category>(this.apiUrl, data);
+  }
+
+  updateCategory(id: number, data: Partial<CategoryDTO>){
+    return this.http.put<Category>(`${this.apiUrl}/${id}`, data);
   }
 
   checkCategory(name: string){

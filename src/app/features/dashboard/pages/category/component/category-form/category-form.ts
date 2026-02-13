@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal, Input, output, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule, FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { CategoryModel } from '../../../../../../models/category.model';
+import { Category, CategoryDTO } from '../../../../../../models/category.model';
 
 @Component({
   selector: 'app-category-form',
@@ -16,15 +16,15 @@ export class CategoryForm implements OnInit {
   protected readonly isNew = signal<boolean>(true);
 
   @Input()
-  set category(data: CategoryModel | null) {
+  set category(data: Category | null) {
     if (data){
       this.isNew.set(false);
       this.categoryForm.patchValue(data);
     }
   }
 
-  @Output() create = new EventEmitter<CategoryModel>();
-  @Output() update = new EventEmitter<CategoryModel>();
+  @Output() create = new EventEmitter<CategoryDTO>();
+  @Output() update = new EventEmitter<CategoryDTO>();
 
   constructor(
     private fb: FormBuilder,

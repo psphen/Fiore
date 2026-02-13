@@ -1,0 +1,17 @@
+<div class="page-product">
+  <button (click)="goToBack()" class="px-3 py-1 bg-pink-400 rounded-md text-white">Back</button>
+  <div class="detail">
+    @if (product()) {
+      <div class="gallery">
+        @for (img of product()?.images; track img) {
+          <img [src]="img" alt="img">
+        }
+      </div>
+    }
+    <div>
+      <h1>{{ product()?.title }}</h1>
+      <h2>{{ product()?.price }}</h2>
+      <h2>{{ product()?.description }}</h2>
+    </div>
+  </div>
+</div>
