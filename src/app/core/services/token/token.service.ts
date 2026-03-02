@@ -1,20 +1,36 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenService {
-  private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}/api/v1`;
-
-  saveToken(token: string){
-    localStorage.setItem('token', token);
+  private readonly platformId = inject(PLATFORM_ID);
+  private get isBrowser(): boolean {
+    return isPlatformBrowser(this.platformId);
   }
 
-  getToken(){
-    const token = localStorage.getItem('token');
-    return token;
+  saveToken(token: string): void {
+    if (this.isBrowser) localStorage.setItem(environment.auth.tokenKey, token);
+  }
+
+  getToken(): string | null {
+    return this.isBrowser ? localStorage.getItem(environment.auth.tokenKey) : null;
+  }
+
+  saveRefreshToken(token: string): void {
+    if (this.isBrowser) localStorage.setItem(environment.auth.refreshTokenKey, token);
+  }
+
+  getRefreshToken(): string | null {
+    return this.isBrowser ? localStorage.getItem(environment.auth.refreshTokenKey) : null;
+  }
+
+  clearTokens(): void {
+    if (!this.isBrowser) return;
+    localStorage.removeItem(environment.auth.tokenKey);
+    localStorage.removeItem(environment.auth.refreshTokenKey);
+    localStorage.removeItem(environment.auth.userKey);
   }
 }

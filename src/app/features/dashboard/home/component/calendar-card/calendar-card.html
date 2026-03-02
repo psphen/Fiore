@@ -1,0 +1,40 @@
+<div class="bg-white rounded-2xl p-5 shadow-sm">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-base font-semibold text-gray-800">{{ monthLabel() }}</h3>
+    <div class="flex gap-2">
+      <button (click)="prevMonth()" class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-pink-50 transition-colors text-gray-500">
+        &#8249;
+      </button>
+      <button (click)="nextMonth()" class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-pink-50 transition-colors text-gray-500">
+        &#8250;
+      </button>
+    </div>
+  </div>
+
+  <!-- Weekday headers -->
+  <div class="grid grid-cols-7 mb-2">
+    @for (day of weekDays; track day) {
+      <div class="text-center text-xs font-semibold text-gray-400 py-1">{{ day }}</div>
+    }
+  </div>
+
+  <!-- Days grid -->
+  <div class="grid grid-cols-7 gap-y-1">
+    @for (cell of calendarDays(); track $index) {
+      <div class="flex items-center justify-center h-8">
+        @if (cell.day !== null) {
+          <span
+            class="w-8 h-8 flex items-center justify-center text-sm rounded-full cursor-pointer transition-colors"
+            [ngClass]="{
+              'bg-pink-500 text-white font-bold': cell.isToday,
+              'text-gray-700 hover:bg-pink-100': !cell.isToday
+            }"
+          >
+            {{ cell.day }}
+          </span>
+        }
+      </div>
+    }
+  </div>
+</div>

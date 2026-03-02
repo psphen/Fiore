@@ -1,1 +1,27 @@
-<p>home-view works!</p>
+<div class="p-6 space-y-6">
+
+  <!-- Row 1: Summary + Calendar -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2">
+      <app-summary-card />
+    </div>
+    <div>
+      <app-calendar-card />
+    </div>
+  </div>
+
+  <!-- Row 2: Bar chart + Categories chart -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2">
+      <app-sales-chart />
+    </div>
+    <div>
+      <app-categories-chart />
+    </div>
+  </div>
+
+  <!-- Row 3: Trending products -->
+  <app-trending-products />
+
+</div>
+

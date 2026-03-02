@@ -1,0 +1,35 @@
+<div class="bg-white rounded-2xl p-5 shadow-sm">
+  <h3 class="text-base font-semibold text-pink-600 mb-4">Productos en tendencia</h3>
+
+  <table class="w-full">
+    <thead>
+      <tr class="border-b border-gray-100">
+        <th class="w-8 pb-3"></th>
+        <th class="text-left text-[11px] font-semibold text-gray-400 tracking-wider pb-3 uppercase">Productos</th>
+        <th class="text-center text-[11px] font-semibold text-gray-400 tracking-wider pb-3 uppercase">Existencias</th>
+        <th class="text-center text-[11px] font-semibold text-gray-400 tracking-wider pb-3 uppercase">Precio</th>
+        <th class="text-center text-[11px] font-semibold text-gray-400 tracking-wider pb-3 uppercase">Ventas</th>
+        <th class="text-right text-[11px] font-semibold text-gray-400 tracking-wider pb-3 uppercase">Ganancias</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (product of products; track product.name) {
+        <tr class="border-b border-gray-50 hover:bg-pink-50/40 transition-colors">
+          <td class="py-3">
+            <input type="checkbox" class="w-4 h-4 accent-pink-500 cursor-pointer">
+          </td>
+          <td class="py-3">
+            <div class="flex items-center gap-3">
+              <img [src]="product.image" [alt]="product.name" class="w-10 h-10 rounded-lg object-cover shrink-0">
+              <span class="text-sm font-medium text-gray-800">{{ product.name }}</span>
+            </div>
+          </td>
+          <td class="py-3 text-center text-sm text-gray-600">{{ product.stock }}</td>
+          <td class="py-3 text-center text-sm text-gray-600">{{ product.price }}</td>
+          <td class="py-3 text-center text-sm text-gray-600">{{ product.sales }}</td>
+          <td class="py-3 text-right text-sm font-semibold text-gray-800">{{ product.earnings }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

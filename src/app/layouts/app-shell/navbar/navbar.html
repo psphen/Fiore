@@ -1,12 +1,29 @@
-<nav class="bg-pink-100 shadow-md p-4">
-  <div class="flex items-center justify-between">
-    <h2 class="text-xl font-bold text-gray-800">{{ pageTitle }}</h2>
-    <button class="bg-pink-300 hover:bg-pink-500 px-3 py-1 rounded-md cursor-pointer transition-all duration-300">Crear persona</button>
-    <!-- <button (click)="download()">Descargar</button> -->
-    <div class="flex items-center gap-4">
-      <span class="text-gray-600"></span>
-      <div class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-white">
-      </div>
+<header class="bg-[#fff6fa] fixed top-0 left-64 right-0 z-30">
+  <div class="flex items-center justify-between h-20 px-10">
+    <div class="flex-col items-center space-y-1">
+      <p class="text-[#8A2846] text-sm">Bienvenida de nuevo</p>
+      <h1 class="text-[#8A2846] font-bold text-2xl">Leidy Sofia Monyoya</h1>
+    </div>
+    <div class="flex items-center gap-2">
+      <app-button-secondary>
+        <fa-icon [icon]="faSearch" class="text-[#8A2846] text-sm"></fa-icon>
+      </app-button-secondary>
+      <app-button-secondary>
+        <fa-icon [icon]="faBell" class="text-[#8A2846] text-sm"></fa-icon>
+      </app-button-secondary>
+      <app-button-secondary>
+        <fa-icon [icon]="faEnvelope" class="text-[#8A2846] text-sm"></fa-icon>
+      </app-button-secondary>
+      <app-button-secondary>
+        <div class="flex items-center gap-2">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnX4Qw-cihNr7QG5zzajge4P6yLbjoHUh57wdQZGz0Tr5i6KOz8qnoM8YMlvNlubI9Uzqur-Nc9M_c41sCo2Qxx65J2YKvm3brZVW8M1yq&s=10" class="w-7 h-7 rounded-full object-cover shrink-0">
+          <div class="text-left">
+            <p class="text-xs font-semibold text-gray-800">Sofia Montoya</p>
+            <p class="text-[11px] text-gray-400">sofia.montoya@gmail.com</p>
+          </div>
+          <fa-icon [icon]="faChevronDown" class="text-gray-400 text-[11px] ml-1"></fa-icon>
+        </div>
+      </app-button-secondary>
     </div>
   </div>
-</nav>
+</header>
