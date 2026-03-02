@@ -1,15 +1,56 @@
-<nav class="mt-4">
-  <ul class="space-y-2">
-    @for (item of menuItems; track item.path) {
+<nav class="h-full overflow-y-auto">
+  <ul class="space-y-1 px-3">
+
+    <p class="text-[10px] text-pink-300 font-bold tracking-widest px-3 pb-1 pt-3">GENERAL</p>
+    @for (item of menuGeneral(); track item.path) {
       <li>
         <a
           [routerLink]="item.path"
-          routerLinkActive="bg-pink-500 text-white"
-          class="flex items-center gap-3 px-4 py-3 text-pink-800 hover:bg-pink-500 hover:text-white transition-colors rounded-lg mx-2"
+          routerLinkActive="bg-pink-100 !text-pink-700 font-semibold"
+          [routerLinkActiveOptions]="{ exact: item.path === '/dashboard/home' }"
+          class="flex items-center gap-3 px-3 py-2.5 text-gray-600 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-150 rounded-xl"
         >
-          <span>{{ item.label }}</span>
+          @if (item.icon) {
+            <span class="material-icons text-[20px] opacity-80">{{ item.icon }}</span>
+          }
+          <span class="text-sm">{{ item.label }}</span>
         </a>
       </li>
     }
+
+    <p class="text-[10px] text-pink-300 font-bold tracking-widest px-3 pb-1 pt-4">GESTION</p>
+    @for (item of menuManagement(); track item.path) {
+      <li>
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="bg-pink-100 !text-pink-700 font-semibold"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="flex items-center gap-3 px-3 py-2.5 text-gray-600 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-150 rounded-xl"
+        >
+          @if (item.icon) {
+            <span class="material-icons text-[20px] opacity-80">{{ item.icon }}</span>
+          }
+          <span class="text-sm">{{ item.label }}</span>
+        </a>
+      </li>
+    }
+
+    <p class="text-[10px] text-pink-300 font-bold tracking-widest px-3 pb-1 pt-4">AJUSTES</p>
+    @for (item of menuSettings(); track item.path) {
+      <li>
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="bg-pink-100 !text-pink-700 font-semibold"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="flex items-center gap-3 px-3 py-2.5 text-gray-600 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-150 rounded-xl"
+        >
+          @if (item.icon) {
+            <span class="material-icons text-[20px] opacity-80">{{ item.icon }}</span>
+          }
+          <span class="text-sm">{{ item.label }}</span>
+        </a>
+      </li>
+    }
+
   </ul>
 </nav>
