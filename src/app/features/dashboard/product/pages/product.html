@@ -1,38 +1,86 @@
-<a [routerLink]="'/product/create'" class="px-5 py-2 rounded-lg bg-blue-400 hover:bg-blue-600 transition-all">Crear Producto</a>
-<table class="border-collapse border border-gray-400 w-full mt-4">
-  <thead>
-    <tr>
-      <th class="border border-gray-300">Nombre</th>
-      <th class="border border-gray-300">Precio</th>
-      <th class="border border-gray-300">Descripción</th>
-      <th class="border border-gray-300">Imagen</th>
-      <th class="border border-gray-300">Categoria</th>
-      <th class="border border-gray-300">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (product of products(); track product.id) {
-      <tr>
-        <td class="border border-gray-300 px-4 py-2">{{ product.title }}</td>
-        <td class="border border-gray-300 px-4 py-2">{{ product.price }}</td>
-        <td class="border border-gray-300 px-4 py-2">{{ product.description }}</td>
-        <td class="border border-gray-300 px-4 py-2 w-[10%]">
-          @if (product.images.length > 0) {
-            <img [src]="product.images[0]" [alt]="product.title" class="w-20 h-20 object-cover rounded-lg">
-          }
-        </td>
-        <td class="border border-gray-300 px-4 py-2">
-          {{ product.category.name }}
-        </td>
-        <td class="border border-gray-300 px-4 py-2">
-          <a [routerLink]="['/product/edit', product.id]" class="px-5 py-2 rounded-lg bg-pink-400 hover:bg-pink-600 transition-all">Editar</a>
-          <button class="px-5 py-2 rounded-lg bg-blue-400 hover:bg-blue-600 transition-all" type="button" (click)="onToggleDetail(product)">Detalles</button>
-          <button class="px-5 py-2 rounded-lg bg-red-400 hover:bg-red-600 transition-all" type="button" (click)="deleteProduct(product.id)">Eliminar</button>
-        </td>
-      </tr>
-    }
-  </tbody>
-</table>
+<div class="p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-[#8A2846]">Productos</h1>
+    <a [routerLink]="'/product/create'" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#8A2846] text-white hover:bg-[#6B1F37] transition-all">
+      <fa-icon [icon]="faPlus"></fa-icon>
+      Crear Producto
+    </a>
+  </div>
+
+  <div class="mb-4 flex items-center gap-4">
+    <div class="relative flex-1 max-w-md">
+      <fa-icon [icon]="faSearch" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></fa-icon>
+      <input 
+        type="text" 
+        [value]="searchTerm()"
+        (input)="onSearchChange($any($event.target).value)"
+        placeholder="Buscar productos..." 
+        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8A2846] focus:border-transparent"
+      >
+    </div>
+  </div>
+
+  <div class="overflow-x-auto rounded-lg shadow">
+    <table class="w-full bg-white">
+      <thead class="bg-[#F5E6E8]">
+        <tr>
+          <th class="px-4 py-3 text-left font-semibold text-[#8A2846]">Nombre</th>
+          <th class="px-4 py-3 text-left font-semibold text-[#8A2846]">Precio</th>
+          <th class="px-4 py-3 text-left font-semibold text-[#8A2846]">Descripción</th>
+          <th class="px-4 py-3 text-left font-semibold text-[#8A2846]">Imagen</th>
+          <th class="px-4 py-3 text-left font-semibold text-[#8A2846]">Categoría</th>
+          <th class="px-4 py-3 text-center font-semibold text-[#8A2846]">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of filteredProducts(); track product.id) {
+          <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+            <td class="px-4 py-3 font-medium">{{ product.title }}</td>
+            <td class="px-4 py-3 text-[#8A2846] font-semibold">${{ product.price | number:'1.2-2' }}</td>
+            <td class="px-4 py-3 text-gray-600 max-w-xs truncate">{{ product.description }}</td>
+            <td class="px-4 py-3 w-[10%]">
+              @if (product.images.length > 0) {
+                <img [src]="product.images[0]" [alt]="product.title" class="w-16 h-16 object-cover rounded-lg shadow-sm">
+              }
+            </td>
+            <td class="px-4 py-3">
+              <span class="px-2 py-1 bg-pink-100 text-[#8A2846] rounded-full text-sm font-medium">
+                {{ product.category.name }}
+              </span>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex justify-center gap-2">
+                <a [routerLink]="['/product/edit', product.id]" class="p-2 rounded-lg bg-pink-100 text-[#8A2846] hover:bg-pink-200 transition-colors" title="Editar">
+                  <fa-icon [icon]="faPencil"></fa-icon>
+                </a>
+                <button class="p-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors" type="button" (click)="onToggleDetail(product)" title="Ver Detalles">
+                  <fa-icon [icon]="faEye"></fa-icon>
+                </button>
+                <button class="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors" type="button" (click)="deleteProduct(product.id)" title="Eliminar">
+                  <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td colspan="6" class="px-4 py-8 text-center text-gray-500">
+              No se encontraron productos
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (filteredProducts().length > 0) {
+    <div class="mt-4 text-sm text-gray-500">
+      Mostrando {{ filteredProducts().length }} de {{ products().length }} productos
+    </div>
+  }
+</div>
+
 <app-product-personal
   [product]="selectedProduct()"
   (closeDetail)="closeDetail()"

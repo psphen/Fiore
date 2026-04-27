@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   environmentName: 'development',
 
-  apiUrl: 'https://api.escuelajs.co',
+  apiUrl: '', // No API externa - usando datos locales
   apiTimeout: 30000,
 
   auth: {
@@ -16,7 +16,7 @@ export const environment = {
     enableAnalytics: false,
     enableLogging: true,
     enableDebugMode: true,
-    enableMockData: false
+    enableMockData: true // Usando datos locales
   },
 
   app: {

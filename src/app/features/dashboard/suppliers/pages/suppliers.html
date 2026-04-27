@@ -1,0 +1,91 @@
+<div class="suppliers-page">
+  <header class="page-header">
+    <h1 class="page-title">Proveedores</h1>
+    <p class="page-subtitle">Gestiona tus proveedores de flores</p>
+  </header>
+
+  <section class="stats-grid">
+    <div class="stat-card" data-color="blue">
+      <div class="stat-icon"><fa-icon [icon]="faTruck" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ stats().total }}</span>
+        <span class="stat-label">Total Proveedores</span>
+      </div>
+    </div>
+    <div class="stat-card" data-color="green">
+      <div class="stat-icon"><fa-icon [icon]="faStar" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ stats().active }}</span>
+        <span class="stat-label">Activos</span>
+      </div>
+    </div>
+    <div class="stat-card" data-color="yellow">
+      <div class="stat-icon"><fa-icon [icon]="faStar" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ stats().avgRating }}</span>
+        <span class="stat-label">Rating Promedio</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="filters-section">
+    <div class="search-wrapper">
+      <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
+      <input
+        type="text"
+        placeholder="Buscar proveedor o contacto..."
+        [value]="searchQuery()"
+        (input)="onSearch($event)"
+        class="filter-input"
+      />
+    </div>
+    <select
+      [value]="selectedCategory()"
+      (change)="onCategoryChange($event)"
+      class="filter-select"
+    >
+      @for (category of categories(); track category) {
+        <option [value]="category">
+          {{ category === 'all' ? 'Todas las categorías' : category }}
+        </option>
+      }
+    </select>
+  </section>
+
+  <section class="table-section">
+    <table class="suppliers-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Contacto</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Categoría</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (supplier of filteredSuppliers(); track supplier.id) {
+          <tr (click)="onSupplierClick(supplier)" class="clickable-row">
+            <td class="name-cell">{{ supplier.name }}</td>
+            <td class="contact-cell">{{ supplier.contact }}</td>
+            <td class="email-cell">{{ supplier.email }}</td>
+            <td class="phone-cell">{{ supplier.phone }}</td>
+            <td class="category-cell">{{ supplier.category }}</td>
+            <td class="status-cell">
+              <span class="status-badge" [class]="getStatusClass(supplier.status)">
+                {{ supplier.status === 'active' ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    @if (filteredSuppliers().length === 0) {
+      <div class="empty-state">
+        <p>No se encontraron proveedores</p>
+      </div>
+    }
+  </section>
+</div>

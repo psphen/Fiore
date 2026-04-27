@@ -67,6 +67,8 @@ export class AuthService {
       role: userInfo.role,
       avatar: userInfo.avatar,
       password: '',
+      createdAt: userInfo.createdAt,
+      status: userInfo.status,
     };
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(environment.auth.userKey, JSON.stringify(authUser));

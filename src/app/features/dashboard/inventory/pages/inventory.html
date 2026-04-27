@@ -1,0 +1,51 @@
+<div class="inventory-page">
+  <header class="page-header">
+    <h1 class="page-title">Inventario</h1>
+    <p class="page-subtitle">Gestiona tu inventario y controla el stock de productos</p>
+  </header>
+
+  <section class="stats-grid">
+    <div class="stat-card" data-color="blue">
+      <div class="stat-icon"><fa-icon [icon]="faBox" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ summary().totalProducts }}</span>
+        <span class="stat-label">Total Productos</span>
+      </div>
+    </div>
+    <div class="stat-card" data-color="green">
+      <div class="stat-icon"><fa-icon [icon]="faShoppingCart" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ summary().totalSold }}</span>
+        <span class="stat-label">Total Vendidos</span>
+      </div>
+    </div>
+    <div class="stat-card" data-color="purple">
+      <div class="stat-icon"><fa-icon [icon]="faPlusCircle" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ summary().totalCreated }}</span>
+        <span class="stat-label">Creados</span>
+      </div>
+    </div>
+    <div class="stat-card" data-color="yellow">
+      <div class="stat-icon"><fa-icon [icon]="faWarning" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ summary().lowStock }}</span>
+        <span class="stat-label">Stock Bajo</span>
+      </div>
+    </div>
+    <div class="stat-card" data-color="red">
+      <div class="stat-icon"><fa-icon [icon]="faExclamationTriangle" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ summary().outOfStock }}</span>
+        <span class="stat-label">Sin Stock</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="table-section">
+    <app-inventory-table
+      [products]="products()"
+      (productClicked)="onProductClick($event)"
+    />
+  </section>
+</div>
