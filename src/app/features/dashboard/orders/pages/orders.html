@@ -1,0 +1,160 @@
+<div class="orders-page">
+  <header class="page-header">
+    <h1 class="page-title">Órdenes</h1>
+    <p class="page-subtitle">Gestiona las órdenes de tus clientes</p>
+  </header>
+
+  <section class="stats-grid">
+    <div class="stat-card" data-color="blue">
+      <div class="stat-icon"><fa-icon [icon]="faShoppingBag" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ summary().totalOrders }}</span>
+        <span class="stat-label">Total Órdenes</span>
+      </div>
+    </div>
+    <div class="stat-card" data-color="yellow">
+      <div class="stat-icon"><fa-icon [icon]="faClock" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ summary().pending }}</span>
+        <span class="stat-label">Pendientes</span>
+      </div>
+    </div>
+    <div class="stat-card" data-color="purple">
+      <div class="stat-icon"><fa-icon [icon]="faTruck" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ summary().shipped }}</span>
+        <span class="stat-label">Enviados</span>
+      </div>
+    </div>
+    <div class="stat-card" data-color="green">
+      <div class="stat-icon"><fa-icon [icon]="faCheckCircle" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ summary().delivered }}</span>
+        <span class="stat-label">Entregados</span>
+      </div>
+    </div>
+    <div class="stat-card" data-color="red">
+      <div class="stat-icon"><fa-icon [icon]="faTimesCircle" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">{{ summary().cancelled }}</span>
+        <span class="stat-label">Cancelados</span>
+      </div>
+    </div>
+    <div class="stat-card" data-color="green-dark">
+      <div class="stat-icon"><fa-icon [icon]="faCheckCircle" class="text-xl"></fa-icon></div>
+      <div class="stat-content">
+        <span class="stat-value">${{ summary().revenue }}</span>
+        <span class="stat-label">Ingresos</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="filters-section">
+    <div class="search-wrapper">
+      <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
+      <input
+        type="text"
+        placeholder="Buscar por cliente, email o ID..."
+        [value]="searchQuery()"
+        (input)="onSearch($event)"
+        class="filter-input"
+      />
+    </div>
+    <select
+      [value]="selectedStatus()"
+      (change)="onStatusChange($event)"
+      class="filter-select"
+    >
+      <option value="all">Todos los estados</option>
+      <option value="pending">Pendiente</option>
+      <option value="processing">Procesando</option>
+      <option value="shipped">Enviado</option>
+      <option value="delivered">Entregado</option>
+      <option value="cancelled">Cancelado</option>
+    </select>
+  </section>
+
+  <section class="table-section">
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Email</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of filteredOrders(); track order.id) {
+          <tr (click)="onOrderClick(order)" class="clickable-row">
+            <td class="id-cell">#{{ order.id }}</td>
+            <td class="customer-cell">{{ order.customerName }}</td>
+            <td class="email-cell">{{ order.customerEmail }}</td>
+            <td class="total-cell">${{ order.total }}</td>
+            <td class="status-cell">
+              <span class="status-badge" [class]="getStatusClass(order.status)">
+                {{ getStatusLabel(order.status) }}
+              </span>
+            </td>
+            <td class="date-cell">{{ order.createdAt | date:'dd/MM/yyyy' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    @if (filteredOrders().length === 0) {
+      <div class="empty-state">
+        <p>No se encontraron órdenes</p>
+      </div>
+    }
+  </section>
+
+  @if (selectedOrder()) {
+    <div class="modal-overlay" (click)="closeDetail()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Órden #{{ selectedOrder()!.id }}</h2>
+          <button class="close-btn" (click)="closeDetail()">
+            <fa-icon [icon]="faTimes"></fa-icon>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="detail-row">
+            <span class="detail-label">Cliente:</span>
+            <span class="detail-value">{{ selectedOrder()!.customerName }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Email:</span>
+            <span class="detail-value">{{ selectedOrder()!.customerEmail }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Estado:</span>
+            <span class="status-badge" [class]="getStatusClass(selectedOrder()!.status)">
+              {{ getStatusLabel(selectedOrder()!.status) }}
+            </span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Fecha:</span>
+            <span class="detail-value">{{ selectedOrder()!.createdAt | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="products-list">
+            <h3>Productos</h3>
+            @for (item of selectedOrder()!.products; track item.id) {
+              <div class="product-item">
+                <span class="product-name">{{ item.title }}</span>
+                <span class="product-qty">x{{ item.quantity }}</span>
+                <span class="product-price">${{ item.price * item.quantity }}</span>
+              </div>
+            }
+          </div>
+          <div class="total-row">
+            <span>Total:</span>
+            <span class="total-value">${{ selectedOrder()!.total }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

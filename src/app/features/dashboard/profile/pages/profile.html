@@ -1,0 +1,113 @@
+<div class="profile-page">
+  <header class="page-header">
+    <h1 class="page-title">Perfil</h1>
+    <p class="page-subtitle">Configura tu información personal</p>
+  </header>
+
+  <div class="profile-content">
+    <div class="profile-card">
+      <div class="profile-header">
+        <img [src]="profile().avatar" [alt]="profile().name" class="profile-avatar" />
+        <div class="profile-info">
+          <h2>{{ profile().name }}</h2>
+          <span class="profile-role">{{ profile().role }}</span>
+        </div>
+        <button class="edit-btn" (click)="toggleEdit()">
+          {{ isEditing() ? 'Cancelar' : 'Editar' }}
+        </button>
+      </div>
+
+      @if (isEditing()) {
+        <div class="profile-form">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input
+              type="text"
+              [value]="editForm().name"
+              (input)="updateField('name', $any($event.target).value)"
+              class="form-input"
+            />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              [value]="editForm().email"
+              (input)="updateField('email', $any($event.target).value)"
+              class="form-input"
+            />
+          </div>
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input
+              type="tel"
+              [value]="editForm().phone"
+              (input)="updateField('phone', $any($event.target).value)"
+              class="form-input"
+            />
+          </div>
+          <button class="save-btn" (click)="saveProfile()">Guardar Cambios</button>
+        </div>
+      } @else {
+        <div class="profile-details">
+          <div class="detail-item">
+            <span class="detail-label">Email</span>
+            <span class="detail-value">{{ profile().email }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Teléfono</span>
+            <span class="detail-value">{{ profile().phone }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Idioma</span>
+            <span class="detail-value">{{ profile().language }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Zona Horaria</span>
+            <span class="detail-value">{{ profile().timezone }}</span>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="settings-card">
+      <h2>Notificaciones</h2>
+      <div class="notification-item">
+        <div class="notification-info">
+          <span class="notification-label">Email</span>
+          <span class="notification-desc">Recibir notificaciones por email</span>
+        </div>
+        <input
+          type="checkbox"
+          [checked]="profile().notifications.email"
+          (change)="updateNotifications('email', $any($event.target).checked)"
+          class="toggle"
+        />
+      </div>
+      <div class="notification-item">
+        <div class="notification-info">
+          <span class="notification-label">Push</span>
+          <span class="notification-desc">Recibir notificaciones push</span>
+        </div>
+        <input
+          type="checkbox"
+          [checked]="profile().notifications.push"
+          (change)="updateNotifications('push', $any($event.target).checked)"
+          class="toggle"
+        />
+      </div>
+      <div class="notification-item">
+        <div class="notification-info">
+          <span class="notification-label">SMS</span>
+          <span class="notification-desc">Recibir notificaciones por SMS</span>
+        </div>
+        <input
+          type="checkbox"
+          [checked]="profile().notifications.sms"
+          (change)="updateNotifications('sms', $any($event.target).checked)"
+          class="toggle"
+        />
+      </div>
+    </div>
+  </div>
+</div>

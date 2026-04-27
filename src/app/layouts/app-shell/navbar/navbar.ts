@@ -48,11 +48,13 @@ export class Navbar {
       name: 'Carlos',
       email: 'carlos@gmail.com',
       password: '123456789',
-      avatar: 'http://192.168.10.32:8200/swagger/index.html'
+      avatar: 'http://192.168.10.32:8200/swagger/index.html',
+      createdAt: new Date(),
+      status: 'active',
     }
     this.userService.create(payload).subscribe({
       next: () => {
-        alert('Poderoso')
+        console.log('Usuario creado exitosamente');
       }
     });
   }

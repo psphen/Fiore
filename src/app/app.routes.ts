@@ -24,12 +24,12 @@ export const routes: Routes = [
   },
   {
     path: 'product/:id',
-    loadComponent: () => import('./features/public/product-detail/product-detail').then(m => m.ProductDetail)
+    loadComponent: () => import('./features/public/product-detail/product-detail').then(m => m.ProductDetail),
+    runGuardsAndResolvers: 'always'
   },
 
   {
     path: 'dashboard',
-    canActivate: [authGuard],
     loadComponent: () => import('./layouts/app-shell/app.shell').then(m => m.AppShell),
     loadChildren: () => import('./features/dashboard/dashboard.route').then(m => m.DASHBOARD_ROUTES)
   },

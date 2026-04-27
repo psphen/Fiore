@@ -1,0 +1,100 @@
+<div class="inventory-filters">
+  <div class="filter-group">
+    <input
+      type="text"
+      placeholder="Buscar por nombre o SKU..."
+      [value]="searchQuery()"
+      (input)="onSearch($event)"
+      class="filter-input"
+    />
+  </div>
+
+  <div class="filter-group">
+    <select
+      [value]="selectedCategory()"
+      (change)="onCategoryChange($event)"
+      class="filter-select"
+    >
+      @for (category of categories(); track category) {
+        <option [value]="category">
+          {{ category === 'all' ? 'Todas las categorías' : category }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <select
+      [value]="selectedStatus()"
+      (change)="onStatusChange($event)"
+      class="filter-select"
+    >
+      <option value="all">Todos los estados</option>
+      <option value="active">Activo</option>
+      <option value="low_stock">Stock Bajo</option>
+      <option value="out_of_stock">Sin Stock</option>
+    </select>
+  </div>
+</div>
+
+<div class="table-container">
+  <table class="inventory-table">
+    <thead>
+      <tr>
+        <th (click)="onSort('title')" class="sortable">
+          Producto
+          @if (sortBy() === 'title') {
+            <span>{{ sortOrder() === 'asc' ? '↑' : '↓' }}</span>
+          }
+        </th>
+        <th>SKU</th>
+        <th (click)="onSort('price')" class="sortable">
+          Precio
+          @if (sortBy() === 'price') {
+            <span>{{ sortOrder() === 'asc' ? '↑' : '↓' }}</span>
+          }
+        </th>
+        <th (click)="onSort('stock')" class="sortable">
+          Stock
+          @if (sortBy() === 'stock') {
+            <span>{{ sortOrder() === 'asc' ? '↑' : '↓' }}</span>
+          }
+        </th>
+        <th (click)="onSort('sold')" class="sortable">
+          Vendidos
+          @if (sortBy() === 'sold') {
+            <span>{{ sortOrder() === 'asc' ? '↑' : '↓' }}</span>
+          }
+        </th>
+        <th>Categoría</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (product of filteredProducts(); track product.id) {
+        <tr (click)="onProductClick(product)" class="clickable-row">
+          <td class="product-cell">
+            <img [src]="product.image" [alt]="product.title" class="product-image" />
+            <span>{{ product.title }}</span>
+          </td>
+          <td class="sku-cell">{{ product.sku }}</td>
+          <td class="price-cell">${{ product.price }}</td>
+          <td class="stock-cell">{{ product.stock }}</td>
+          <td class="sold-cell">{{ product.sold }}</td>
+          <td class="category-cell">{{ product.category }}</td>
+          <td class="status-cell">
+            <span class="status-badge" [class]="getStatusClass(product.status)">
+              {{ getStatusLabel(product.status) }}
+            </span>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  @if (filteredProducts().length === 0) {
+    <div class="empty-state">
+      <p>No se encontraron productos</p>
+    </div>
+  }
+</div>

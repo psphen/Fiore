@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SidebarOptions } from '../../../../../features/dashboard/layout/sidebar/components/sidebar-options/sidebar-options';
+import { SidebarOptions } from './sidebar-options';
 
 describe('SidebarOptions', () => {
   let component: SidebarOptions;

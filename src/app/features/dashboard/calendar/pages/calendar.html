@@ -1,0 +1,54 @@
+<div class="calendar-page">
+  <header class="page-header">
+    <h1 class="page-title">Calendario</h1>
+    <p class="page-subtitle">Agenda de entregas, reuniones y eventos</p>
+  </header>
+
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <button class="nav-btn" (click)="previousMonth()">‹</button>
+      <h2 class="month-title">{{ monthName() }}</h2>
+      <button class="nav-btn" (click)="nextMonth()">›</button>
+    </div>
+
+    <div class="calendar-grid">
+      @for (day of weekDays; track day) {
+        <div class="weekday-header">{{ day }}</div>
+      }
+      
+      @for (date of calendarDays(); track date?.toISOString() || $index) {
+        <div class="calendar-day" [class.other-month]="!date" [class.today]="date?.toDateString() === today.toDateString()">
+          @if (date) {
+            <span class="day-number">{{ date.getDate() }}</span>
+            <div class="day-events">
+              @for (event of eventsForDay(date); track event.id) {
+                <div class="event-dot" [class]="getEventClass(event.type)" [title]="event.title">
+                  {{ getEventLabel(event.type) }}
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="calendar-legend">
+      <div class="legend-item">
+        <span class="legend-dot bg-blue-100"></span>
+        <span>Orden</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot bg-green-100"></span>
+        <span>Entrega</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot bg-purple-100"></span>
+        <span>Reunión</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot bg-yellow-100"></span>
+        <span>Nota</span>
+      </div>
+    </div>
+  </div>
+</div>

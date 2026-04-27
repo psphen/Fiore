@@ -40,20 +40,23 @@ export class ProductContainer implements OnInit {
         this.router.navigate(['product']);
       },
       error: (er) => {
-        alert(er);
+        console.error('Error creando producto:', er);
       }
     });
   }
 
   protected updateProduct(data: UpdateProductDTO){
     if(!this.productModel?.id){
-      alert('No se encontro nada');
-      return
+      console.error('Error: producto no encontrado');
+      return;
     }
-    this.productService.update(this.productModel?.id, data).subscribe({
+    this.productService.update(this.productModel.id, data).subscribe({
       next: () => {
-        this.router.navigate(['product'])
+        this.router.navigate(['product']);
+      },
+      error: (err) => {
+        console.error('Error actualizando producto:', err);
       }
-    })
+    });
   }
 }
